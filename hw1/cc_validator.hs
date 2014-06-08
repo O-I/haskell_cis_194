@@ -29,3 +29,18 @@ doubleEveryOther x = reverse (doubleEveryOtherFromLeft (reverse x))
 sumDigits :: [Integer] -> Integer
 sumDigits []     = 0
 sumDigits (x:xs) = sum (toDigits x) + sumDigits xs
+
+-- Exercise 4
+
+-- Validate credit card number
+validate :: Integer -> Bool
+validate cc = luhnCheck cc && validLength cc
+
+validLength :: Integer -> Bool
+validLength x = (length (toDigits x)) `elem` [13..19]
+
+luhnSum :: Integer -> Integer
+luhnSum cc = sumDigits (doubleEveryOtherFromLeft (toDigitsRev cc))
+
+luhnCheck :: Integer -> Bool
+luhnCheck cc =  (luhnSum cc) `mod` 10 == 0
