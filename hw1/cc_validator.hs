@@ -22,3 +22,10 @@ doubleEveryOtherFromLeft a = a
 -- Double every second digit from the right
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther x = reverse (doubleEveryOtherFromLeft (reverse x))
+
+-- Exercise 3
+
+-- Calculate the sum of all digits
+sumDigits :: [Integer] -> Integer
+sumDigits []     = 0
+sumDigits (x:xs) = sum (toDigits x) + sumDigits xs
