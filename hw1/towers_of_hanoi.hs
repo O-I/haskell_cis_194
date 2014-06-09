@@ -5,5 +5,6 @@
 type Peg = String
 type Move = (Peg, Peg)
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi 0 _ _ _ = []
-hanoi n s d u = hanoi (n-1) s u d ++ [(s, d)] ++ hanoi (n-1) u d s
+hanoi n s d u
+  | n <= 0 = []
+  | n >  0 = hanoi (n-1) s u d ++ [(s, d)] ++ hanoi (n-1) u d s
