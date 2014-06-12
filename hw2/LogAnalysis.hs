@@ -21,3 +21,8 @@ parseMessage message
                                         (read (words message !! 2) :: Int)
                                         (unwords (drop 3 (words message)))
   | otherwise              = Unknown message
+
+-- Parses an entire log file
+
+parse :: String -> [LogMessage]
+parse file = map parseMessage (lines file)
