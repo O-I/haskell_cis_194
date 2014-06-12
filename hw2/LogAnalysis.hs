@@ -10,17 +10,19 @@ import Log
 
 parseMessage :: String -> LogMessage
 parseMessage message
-  | take 2 message == "I " = LogMessage Info
-                                        (read (words message !! 1) :: Int)
-                                        (unwords (drop 2 (words message)))
-  | take 2 message == "W " = LogMessage Warning
-                                        (read (words message !! 1) :: Int)
-                                        (unwords (drop 2 (words message)))
-  | take 2 message == "E " = LogMessage (Error
-                                        (read (words message !! 1) :: Int))
-                                        (read (words message !! 2) :: Int)
-                                        (unwords (drop 3 (words message)))
-  | otherwise              = Unknown message
+  | kind == "I" = LogMessage Info
+                  (read (msg !! 1) :: Int)
+                  (unwords (drop 2 msg))
+  | kind == "W" = LogMessage Warning
+                  (read (msg !! 1) :: Int)
+                  (unwords (drop 2 msg))
+  | kind == "E" = LogMessage (Error
+                  (read (msg !! 1) :: Int))
+                  (read (msg !! 2) :: Int)
+                  (unwords (drop 3 msg))
+  | otherwise   = Unknown (unwords msg)
+  where msg     = words message
+        kind    = head msg
 
 -- Parses an entire log file
 
