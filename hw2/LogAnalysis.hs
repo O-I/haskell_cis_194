@@ -13,7 +13,7 @@ parseMessage message
   | kind == "I"  = LogMessage  Info    (intArg 1)  (strArg 2)
   | kind == "W"  = LogMessage  Warning (intArg 1)  (strArg 2)
   | kind == "E"  = LogMessage (Error   (intArg 1)) (intArg 2) (strArg 3)
-  | otherwise    = Unknown (unwords msg)
+  | otherwise    = Unknown message
   where msg      = words message
         kind     = head msg
         intArg n = read (msg !! n) :: Int
