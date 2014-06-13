@@ -23,3 +23,20 @@ parseMessage message
 
 parse :: String -> [LogMessage]
 parse file = map parseMessage (lines file)
+
+-- Exercise 2
+
+-- Inserts a LogMessage into a MessageTree
+
+insert :: LogMessage -> MessageTree -> MessageTree
+insert (Unknown _) tree     = tree
+insert message Leaf         = Node Leaf message Leaf
+insert message (Node l m r)
+  | message > m = Node (insert l Leaf) m (insert message r)
+  | otherwise   = Node (insert message l) m (insert r Leaf)
+
+-- Compares two LogMessages by timestamp
+
+instance Ord LogMessage where
+  Unknown _ = error "Unknown has no timestamp"
+  (x timestamp1 y) `compare` (x timestamp2 y) = timestamp1 `compare` timestamp2
