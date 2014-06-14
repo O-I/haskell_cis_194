@@ -47,3 +47,12 @@ after _ _ = error "Missing timestamp"
 
 build :: [LogMessage] -> MessageTree
 build = foldr insert Leaf
+
+-- Exercise 4
+
+-- Produces a list of LogMessages sorted by timestamp
+
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf               = []
+inOrder (Node Leaf m Leaf) = [m]
+inOrder (Node l m r)       = inOrder l ++ [m] ++ inOrder r
