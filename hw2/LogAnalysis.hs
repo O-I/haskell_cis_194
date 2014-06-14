@@ -32,11 +32,11 @@ insert :: LogMessage -> MessageTree -> MessageTree
 insert (Unknown _) tree     = tree
 insert message Leaf         = Node Leaf message Leaf
 insert message (Node l m r)
-  | message > m = Node (insert l Leaf) m (insert message r)
-  | otherwise   = Node (insert message l) m (insert r Leaf)
+  | message `after` m = Node l m (insert message r)
+  | otherwise         = Node (insert message l) m r
 
 -- Compares two LogMessages by timestamp
 
-instance Ord LogMessage where
-  Unknown _ = error "Unknown has no timestamp"
-  (x timestamp1 y) `compare` (x timestamp2 y) = timestamp1 `compare` timestamp2
+after :: LogMessage -> LogMessage -> Bool
+after (LogMessage _ t1 _) (LogMessage _ t2 _) = t1 > t2
+after _ _ = error "Missing timestamp"
