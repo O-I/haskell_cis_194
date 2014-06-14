@@ -53,6 +53,5 @@ build = foldr insert Leaf
 -- Produces a list of LogMessages sorted by timestamp
 
 inOrder :: MessageTree -> [LogMessage]
-inOrder Leaf               = []
-inOrder (Node Leaf m Leaf) = [m]
-inOrder (Node l m r)       = inOrder l ++ [m] ++ inOrder r
+inOrder Leaf         = []
+inOrder (Node l m r) = inOrder l ++ [m] ++ inOrder r
