@@ -40,3 +40,10 @@ insert message (Node l m r)
 after :: LogMessage -> LogMessage -> Bool
 after (LogMessage _ t1 _) (LogMessage _ t2 _) = t1 > t2
 after _ _ = error "Missing timestamp"
+
+-- Exercise 3
+
+-- Builds a MessageTree given a list of LogMessages
+
+build :: [LogMessage] -> MessageTree
+build = foldr insert Leaf
