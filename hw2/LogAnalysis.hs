@@ -55,3 +55,15 @@ build = foldr insert Leaf
 inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf         = []
 inOrder (Node l m r) = inOrder l ++ [m] ++ inOrder r
+
+-- Exercise 5
+
+-- Extracts LogMessages with severity >= 50 from unsorted list
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong msgs =
+  [msg | m@(LogMessage _ _ msg) <- inOrder (build msgs), severityAtAndOver50 m]
+
+severityAtAndOver50 :: LogMessage -> Bool
+severityAtAndOver50 (LogMessage (Error severity) _ _) = severity >= 50
+severityAtAndOver50 _ = False
