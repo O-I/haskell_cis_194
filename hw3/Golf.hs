@@ -8,7 +8,7 @@ module Golf where
    element from the input list, and the nth list in the
    output should contain every nth element from the input list.
 
-   I first implemented an everyNth function that takes an integer
+   First, I implemented an everyNth function that takes an integer
    n and a list a and returns a list of every nth element of a.
    For null a, an empty list is returned. For n <= 0, an invalid
    size error is raised. Otherwise, I take the list and zip it with
@@ -38,6 +38,17 @@ everyNth n a
    maximum is 4, since it is greater than the elements immediately
    before and after it (3 and 1). 5 is not a local maximum since
    there is no element that comes after it.
+
+   First, I implemented an eachCons function modeled after Ruby's
+   Enumerable#each_cons. Given a positive integer n and a list l,
+   eachCons n l returns a list of lists that are consecutive n
+   elements of l. For null l, an empty list is returned and an
+   error is raised if n <= 0.
+
+   Finally, localMaxima takes an integer list l and returns a list
+   of all local maxima (if there are any) using a list comprehension
+   ranging over all triples of eachCons 3 l such that the second
+   element is greater than the first and the third.
 -}
 
 localMaxima :: [Int] -> [Int]
