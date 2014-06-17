@@ -28,3 +28,19 @@ everyNth n a
   | n <= 0    = []
   | null a    = []
   | otherwise = map fst [x | x <- zip a [1..length a], (snd x) `mod` n == 0]
+
+{- Exercise 2  Local maxima
+
+   A local maximum of a list is an element of the list which is
+   strictly greater than both the elements immediately before and
+   after it. For example, in the list [2,3,4,1,5], the only local
+   maximum is 4, since it is greater than the elements immediately
+   before and after it (3 and 1). 5 is not a local maximum since
+   there is no element that comes after it.
+-}
+
+eachCons :: Int -> [a] -> [[a]]
+eachCons n a
+  | n <= 0    = []
+  | null a    = []
+  | otherwise = map (\x -> take n $ drop x a) [0..length a - n]
