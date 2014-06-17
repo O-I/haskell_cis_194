@@ -10,11 +10,12 @@ module Golf where
 
    I first implemented an everyNth function that takes an integer
    n and a list a and returns a list of every nth element of a.
-   For n <= 0 or null a, an empty list is returned. Otherwise,
-   I take the list and zip it with [1..length a] to act as a
-   1-based pseudo index. I use a list comprehension to take only
-   those ordered pairs where the index equals 0 mod n, and then
-   map the first element of each pair to get the desired result.
+   For null a, an empty list is returned. For n <= 0, an invalid
+   size error is raised. Otherwise, I take the list and zip it with
+   [1..length a] to act as a 1-based pseudo index. I use a list
+   comprehension to take only those ordered pairs where the index
+   equals 0 mod n, and then map the first element of each pair to
+   get the desired result.
 
    Finally, the function skips takes a list l and maps the
    lambda (everyNth n l) onto n in [1..length l].
@@ -25,7 +26,7 @@ skips l = map (\n -> everyNth n l) [1..length l]
 
 everyNth :: Int -> [a] -> [a]
 everyNth n a
-  | n <= 0    = []
+  | n <= 0    = error "Size must be an integer greater than zero"
   | null a    = []
   | otherwise = map fst [x | x <- zip a [1..length a], (snd x) `mod` n == 0]
 
@@ -41,6 +42,6 @@ everyNth n a
 
 eachCons :: Int -> [a] -> [[a]]
 eachCons n a
-  | n <= 0    = []
+  | n <= 0    = error "Size must be an integer greater than zero"
   | null a    = []
   | otherwise = map (\x -> take n $ drop x a) [0..length a - n]
