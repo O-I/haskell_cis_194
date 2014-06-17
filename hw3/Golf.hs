@@ -40,6 +40,9 @@ everyNth n a
    there is no element that comes after it.
 -}
 
+localMaxima :: [Int] -> [Int]
+localMaxima l = [ y | [x,y,z] <- eachCons 3 l, y > x, y > z ]
+
 eachCons :: Int -> [a] -> [[a]]
 eachCons n a
   | n <= 0    = error "Size must be an integer greater than zero"
