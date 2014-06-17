@@ -14,7 +14,7 @@ module Golf where
    size error is raised. Otherwise, I take the list and zip it with
    [1..length a] to act as a 1-based pseudo index. I use a list
    comprehension to take only those ordered pairs where the index
-   equals 0 mod n, and then map the first element of each pair to
+   equals 0 mod n, and take only the first element of each pair to
    get the desired result.
 
    Finally, the function skips takes a list l and maps the
@@ -28,7 +28,7 @@ everyNth :: Int -> [a] -> [a]
 everyNth n a
   | n <= 0    = error "Size must be an integer greater than zero"
   | null a    = []
-  | otherwise = map fst [x | x <- zip a [1..length a], (snd x) `mod` n == 0]
+  | otherwise = [ x | (x,y) <- zip a [1..length a], y `mod` n == 0 ]
 
 {- Exercise 2  Local maxima
 
