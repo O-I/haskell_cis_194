@@ -72,6 +72,9 @@ eachCons n a
    input does contain such numbers).
 -}
 
+histogram :: [Integer] -> String
+histogram l = intercalate "\n" (squeeze $ rotNeg90 $ pad $ asterisk $ freq l) ++ "\n"
+
 squeeze :: [String] -> [String]
 squeeze l = dropWhile (== replicate 10 ' ') l
 
