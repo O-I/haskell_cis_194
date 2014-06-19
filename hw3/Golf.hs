@@ -1,5 +1,7 @@
 module Golf where
 
+import Data.List
+
 {- Exercise 1  Hopscotch
 
    The output of skips is a list of lists. The first list
@@ -69,6 +71,9 @@ eachCons n a
    than 9 (that is, it does not matter what your function does if the
    input does contain such numbers).
 -}
+
+rotNeg90 :: [String] -> [String]
+rotNeg90 l = reverse $ transpose l
 
 pad :: [String] -> [String]
 pad l = map (\s -> s ++ replicate (10 - length s) ' ') l
