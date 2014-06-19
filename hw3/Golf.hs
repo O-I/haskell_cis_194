@@ -59,3 +59,19 @@ eachCons n a
   | n <= 0    = error "Size must be an integer greater than zero"
   | null a    = []
   | otherwise = map (\x -> take n $ drop x a) [0..length a - n]
+
+{- Exercise 3  Histogram
+
+   Write a function which takes as input a list of Integers between
+   0 and 9 (inclusive), and outputs a vertical histogram showing how
+   many of each number were in the input list. You may assume that the
+   input list does not contain any numbers less than zero or greater
+   than 9 (that is, it does not matter what your function does if the
+   input does contain such numbers).
+-}
+
+count :: Int -> [Int] -> Int
+count _ [] = 0
+count n (x:xs)
+  | n == x    = 1 + count n xs
+  | otherwise = count n xs
