@@ -70,6 +70,9 @@ eachCons n a
    input does contain such numbers).
 -}
 
+asterisk :: [Integer] -> [String]
+asterisk l = map (\(m,n) -> (show m) ++ "=" ++ replicate (fromIntegral n) '*') (zip [0..9] l)
+
 freq :: [Integer] -> [Integer]
 freq l = map (\n -> count n l) [0..9]
 
