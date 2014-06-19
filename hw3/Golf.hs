@@ -70,7 +70,10 @@ eachCons n a
    input does contain such numbers).
 -}
 
-count :: Int -> [Int] -> Int
+freq :: [Integer] -> [Integer]
+freq l = map (\n -> count n l) [0..9]
+
+count :: Integer -> [Integer] -> Integer
 count _ [] = 0
 count n (x:xs)
   | n == x    = 1 + count n xs
