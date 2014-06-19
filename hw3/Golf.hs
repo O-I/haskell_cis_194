@@ -72,6 +72,9 @@ eachCons n a
    input does contain such numbers).
 -}
 
+squeeze :: [String] -> [String]
+squeeze l = dropWhile (== replicate 10 ' ') l
+
 rotNeg90 :: [String] -> [String]
 rotNeg90 l = reverse $ transpose l
 
