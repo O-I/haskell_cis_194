@@ -70,6 +70,9 @@ eachCons n a
    input does contain such numbers).
 -}
 
+pad :: [String] -> [String]
+pad l = map (\s -> s ++ replicate (10 - length s) ' ') l
+
 asterisk :: [Integer] -> [String]
 asterisk l = map (\(m,n) -> (show m) ++ "=" ++ replicate (fromIntegral n) '*') (zip [0..9] l)
 
