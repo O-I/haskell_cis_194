@@ -11,4 +11,4 @@ fun1 (x:xs)
 -- Refactored fun1
 
 fun1' :: [Integer] -> Integer
-fun1' = product . map (\x -> x - 2) . filter even
+fun1' = product . map (subtract 2) . filter even
