@@ -22,3 +22,8 @@ insert item (Node i l m r)
 height :: Tree a -> Integer
 height Leaf           = -1
 height (Node i l m r) = i
+
+-- Exercise 3  More folds!
+
+xor :: [Bool] -> Bool
+xor = odd . length . (filter (== True))
