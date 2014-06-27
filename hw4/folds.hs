@@ -25,5 +25,13 @@ height (Node i l m r) = i
 
 -- Exercise 3  More folds!
 
+-- xor using foldr
 xor :: [Bool] -> Bool
-xor = odd . length . (filter (== True))
+xor = foldr defXor False
+
+defXor :: Bool -> Bool -> Bool
+defXor p q = (p || q) && not (p && q)
+
+-- xor using filter
+xor' :: [Bool] -> Bool
+xor' = odd . length . (filter (== True))
