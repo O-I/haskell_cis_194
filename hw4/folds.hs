@@ -35,3 +35,7 @@ defXor p q = (p || q) && not (p && q)
 -- xor using filter
 xor' :: [Bool] -> Bool
 xor' = odd . length . (filter (== True))
+
+-- map using foldr
+map' :: (a -> b) -> [a] -> [b]
+map' f xs = foldr (\x acc -> f x : acc) [] xs
