@@ -39,3 +39,7 @@ xor' = odd . length . (filter (== True))
 -- map using foldr
 map' :: (a -> b) -> [a] -> [b]
 map' f xs = foldr (\x acc -> f x : acc) [] xs
+
+-- foldl using foldr
+myFoldl :: (a -> b -> a) -> a -> [b] -> a
+myFoldl f base xs = foldr (\b g x -> g (f x b)) id xs base
