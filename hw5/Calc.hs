@@ -18,3 +18,18 @@ evalStr expr = case parse of
                  Just x  -> Just $ eval x
   where
     parse = parseExp Lit Add Mul expr
+
+-- Exercise 3
+
+class Expr a where
+  add :: a -> a -> a
+  mul :: a -> a -> a
+  lit :: Integer -> a
+
+instance Expr ExprT where
+  add = Add
+  mul = Mul
+  lit = Lit
+
+reify :: ExprT -> ExprT
+reify = id
