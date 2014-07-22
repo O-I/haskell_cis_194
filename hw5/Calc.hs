@@ -33,3 +33,21 @@ instance Expr ExprT where
 
 reify :: ExprT -> ExprT
 reify = id
+
+-- Exercise 4
+
+instance Expr Integer where
+  add = (+)
+  mul = (*)
+  lit = id
+
+instance Expr Bool where
+  add = (||)
+  mul = (&&)
+  lit = (> 0)
+
+testExp :: Expr a => Maybe a
+testExp = parseExp lit add mul "(3 * -4) + 5"
+
+testInteger = testExp :: Maybe Integer
+testBool    = testExp :: Maybe Bool
