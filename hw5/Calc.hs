@@ -1,7 +1,11 @@
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+
 module Calc where
 
 import ExprT
 import Parser
+import qualified StackVM
 
 -- Exercise 1
 
@@ -53,7 +57,7 @@ instance Expr MinMax where
   mul (MinMax x) (MinMax y) = MinMax $ min x y
   lit                       = MinMax
 
-newtype Mod7   = Mod7 Integer deriving (Eq, Show)
+newtype Mod7 = Mod7 Integer deriving (Eq, Show)
 
 instance Expr Mod7 where
   add (Mod7 x) (Mod7 y) = Mod7 $ (x + y) `mod` 7
@@ -67,3 +71,14 @@ testInteger = testExp :: Maybe Integer
 testBool    = testExp :: Maybe Bool
 testMM      = testExp :: Maybe MinMax
 testSat     = testExp :: Maybe Mod7
+testStackVM = testExp :: Maybe StackVM.Program
+
+-- Exercise 5
+
+instance Expr StackVM.Program where
+  add x y = x ++ y ++ [StackVM.Add]
+  mul x y = x ++ y ++ [StackVM.Mul]
+  lit x   = [StackVM.PushI x]
+
+compile :: String -> Maybe StackVM.Program
+compile str = parseExp lit add mul str
