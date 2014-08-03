@@ -6,6 +6,7 @@ module Calc where
 import ExprT
 import Parser
 import qualified StackVM
+import qualified Data.Map as M
 
 -- Exercise 1
 
@@ -82,3 +83,22 @@ instance Expr StackVM.Program where
 
 compile :: String -> Maybe StackVM.Program
 compile str = parseExp lit add mul str
+
+-- Exercise 6
+
+class HasVars a where
+  var :: String -> a
+
+data VarExprT = Lit Integer
+              | Add VarExprT VarExprT
+              | Mul VarExprT VarExprT
+              | Var String
+  deriving(Show, Eq)
+
+instance Expr VarExprT where
+  add = Add
+  mul = Mul
+  lit = Lit
+
+instance HasVars VarExprT where
+  var s = Var s
