@@ -11,9 +11,9 @@ import qualified Data.Map as M
 -- Exercise 1
 
 eval :: ExprT -> Integer
-eval (Lit x)       = x
-eval (Add (x) (y)) = (eval x) + (eval y)
-eval (Mul (x) (y)) = (eval x) * (eval y)
+eval (ExprT.Lit x)       = x
+eval (ExprT.Add (x) (y)) = (eval x) + (eval y)
+eval (ExprT.Mul (x) (y)) = (eval x) * (eval y)
 
 -- Exercise 2
 
@@ -22,7 +22,7 @@ evalStr expr = case parse of
                  Nothing -> Nothing
                  Just x  -> Just $ eval x
   where
-    parse = parseExp Lit Add Mul expr
+    parse = parseExp ExprT.Lit ExprT.Add ExprT.Mul expr
 
 -- Exercise 3
 
@@ -32,9 +32,9 @@ class Expr a where
   lit :: Integer -> a
 
 instance Expr ExprT where
-  add = Add
-  mul = Mul
-  lit = Lit
+  add = ExprT.Add
+  mul = ExprT.Mul
+  lit = ExprT.Lit
 
 reify :: ExprT -> ExprT
 reify = id
@@ -96,9 +96,9 @@ data VarExprT = Lit Integer
   deriving(Show, Eq)
 
 instance Expr VarExprT where
-  add = Add
-  mul = Mul
-  lit = Lit
+  add = ExprT.Add
+  mul = ExprT.Mul
+  lit = ExprT.Lit
 
 instance HasVars VarExprT where
   var s = Var s
