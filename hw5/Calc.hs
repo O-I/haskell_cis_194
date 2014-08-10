@@ -5,6 +5,7 @@ module Calc where
 
 import ExprT
 import Parser
+import VarExprT
 import qualified StackVM
 import qualified Data.Map as M
 
@@ -89,16 +90,10 @@ compile str = parseExp lit add mul str
 class HasVars a where
   var :: String -> a
 
-data VarExprT = Lit Integer
-              | Add VarExprT VarExprT
-              | Mul VarExprT VarExprT
-              | Var String
-  deriving(Show, Eq)
-
 instance Expr VarExprT where
-  add = ExprT.Add
-  mul = ExprT.Mul
-  lit = ExprT.Lit
+  add = VarExprT.Add
+  mul = VarExprT.Mul
+  lit = VarExprT.Lit
 
 instance HasVars VarExprT where
   var s = Var s
