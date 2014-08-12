@@ -6,6 +6,7 @@ module Calc where
 import ExprT
 import Parser
 import VarExprT
+import Control.Monad
 import qualified StackVM
 import qualified Data.Map as M
 
@@ -97,3 +98,16 @@ instance Expr VarExprT where
 
 instance HasVars VarExprT where
   var s = Var s
+
+instance Expr (M.Map String Integer -> Maybe Integer) where
+  add x y m = liftM2 (+) (x m) (y m)
+  mul x y m = liftM2 (*) (x m) (y m)
+  lit n _   = Just n
+
+instance HasVars (M.Map String Integer -> Maybe Integer) where
+  var = M.lookup
+
+withVars :: [(String, Integer)]
+         -> (M.Map String Integer -> Maybe Integer)
+         -> Maybe Integer
+withVars vs expr = expr $ M.fromList vs
