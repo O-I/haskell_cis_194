@@ -1,3 +1,5 @@
+{-#LANGUAGE ParallelListComp #-} -- for fibs''
+
 -- Exercise 1
 
 fib :: Integer -> Integer
@@ -20,3 +22,15 @@ memo_fib = (map fibo [0..] !!)
 
 fibs2 :: [Integer]
 fibs2 = map memo_fib [0..]
+
+-- Some alternatives found online:
+-- (http://www.techrepublic.com/article/infinite-list-tricks-in-haskell/)
+
+fibs' :: [Integer]
+fibs' = 0 : 1 : zipWith (+) fibs' (tail fibs')
+
+fibs'' :: [Integer]
+fibs'' = 0 : 1 : [ a+b | a <- fibs'' | b <- tail fibs'' ]
+
+fibs''' :: [Integer]
+fibs''' = 0 : scanl (+) 1 fibs'''
