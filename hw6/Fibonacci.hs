@@ -64,3 +64,8 @@ nats = streamFromSeed (+1) 0
 
 interleaveStreams :: Stream a -> Stream a -> Stream a
 interleaveStreams (Cons x xs) ys = Cons x $ interleaveStreams ys xs
+
+ruler :: Stream Integer
+ruler = streamMap f $ streamMap (+1) nats
+        where f x | odd x = 0
+                  | otherwise = 1 + f (x `div` 2)
