@@ -81,7 +81,11 @@ ruler = rule 0 where
 x :: Stream Integer
 x = Cons 0 $ Cons 1 $ streamRepeat 0
 
+gain :: Integer -> Stream Integer -> Stream Integer
+gain n (Cons x xs) = Cons (n * x) $ gain n xs
+
 instance Num (Stream Integer) where
   fromInteger n                    = Cons n $ streamRepeat 0
-  negate (Cons x xs)               = Cons (-1 * x) $ negate xs
+  negate s                         = gain (-1) s
   (+) (Cons x xs) (Cons y ys)      = Cons (x + y) $ xs + ys
+  (*) (Cons x xs) yall@(Cons y ys) = Cons (x * y) $ (gain x ys) + (xs * yall)
