@@ -1,4 +1,6 @@
-{-#LANGUAGE ParallelListComp #-} -- for fibs''
+{-# LANGUAGE ParallelListComp #-} -- for fibs''
+{-# LANGUAGE FlexibleInstances #-}
+{-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 -- Exercise 1
 
@@ -73,3 +75,13 @@ ruler' = streamMap f $ streamMap (+1) nats
 ruler :: Stream Integer
 ruler = rule 0 where
         rule n = interleaveStreams (streamRepeat n) (rule $ n + 1)
+
+-- Exercise 6
+
+x :: Stream Integer
+x = Cons 0 $ Cons 1 $ streamRepeat 0
+
+instance Num (Stream Integer) where
+  fromInteger n                    = Cons n $ streamRepeat 0
+  negate (Cons x xs)               = Cons (-1 * x) $ negate xs
+  (+) (Cons x xs) (Cons y ys)      = Cons (x + y) $ xs + ys
