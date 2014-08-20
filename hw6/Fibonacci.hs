@@ -89,3 +89,9 @@ instance Num (Stream Integer) where
   negate s                         = gain (-1) s
   (+) (Cons x xs) (Cons y ys)      = Cons (x + y) $ xs + ys
   (*) (Cons x xs) yall@(Cons y ys) = Cons (x * y) $ (gain x ys) + (xs * yall)
+
+instance Fractional (Stream Integer) where
+  (/) xall@(Cons x xs) yall@(Cons y ys) = Cons (x `div` y) $ gain (1 `div` y) (xs - (xall / yall) * ys)
+
+fibs3 :: Stream Integer
+fibs3 = x / (1 - x - x^2)
