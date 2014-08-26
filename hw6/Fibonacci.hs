@@ -102,6 +102,9 @@ data Matrix = Matrix Integer Integer Integer Integer
   deriving (Eq, Show)
 
 instance Num Matrix where
+  fromInteger n                         = Matrix n n n n
+  negate (Matrix a b c d)               = Matrix (-a) (-b) (-c) (-d)
+  (+) (Matrix a b c d) (Matrix w x y z) = Matrix (a+w) (b+x) (c+y) (d+z)
   (*) (Matrix a b c d) (Matrix w x y z) = Matrix (a*w + b*y) (a*x + b*z) (c*w + d*y) (c*x + d*z) 
 
 fib4 :: Integer -> Integer
