@@ -11,3 +11,6 @@ tag :: Monoid m => JoinList m a -> m
 tag Empty          = mempty
 tag (Single m _)   = m
 tag (Append m _ _) = m
+
+(+++) :: Monoid m => JoinList m a -> JoinList m a -> JoinList m a
+jl1 +++ jl2 = Append (tag jl1 <> tag jl2) jl1 jl2
