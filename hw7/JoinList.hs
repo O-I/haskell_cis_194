@@ -16,7 +16,7 @@ tag (Single m _)   = m
 tag (Append m _ _) = m
 
 (+++) :: Monoid m => JoinList m a -> JoinList m a -> JoinList m a
-jl1 +++ jl2 = Append (tag jl1 <> tag jl2) jl1 jl2
+l1 +++ l2 = Append (tag l1 <> tag l2) l1 l2
 
 -- Exercise 2
 
@@ -31,5 +31,15 @@ jlToList Empty            = []
 jlToList (Single _ a)     = [a]
 jlToList (Append _ l1 l2) = jlToList l1 ++ jlToList l2
 
+jlSize :: (Sized b, Monoid b) => JoinList b a -> Int
+jlSize = getSize . size . tag
+
 indexJ :: (Sized b, Monoid b) => Int -> JoinList b a -> Maybe a
-indexJ = _
+indexJ _ Empty        = Nothing
+indexJ 0 (Single _ a) = Just a
+indexJ _ (Single _ _) = Nothing
+indexJ n jl@(Append m l1 l2)
+  | n < 0         = Nothing
+  | n > jlSize jl = Nothing
+  | n < jlSize l1 = indexJ n l1
+  | otherwise     = indexJ (n - jlSize l1) l2
