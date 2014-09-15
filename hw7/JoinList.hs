@@ -43,3 +43,13 @@ indexJ n jl@(Append m l1 l2)
   | n > jlSize jl = Nothing
   | n < jlSize l1 = indexJ n l1
   | otherwise     = indexJ (n - jlSize l1) l2
+
+dropJ :: (Sized b, Monoid b) =>
+         Int -> JoinList b a -> JoinList b a
+dropJ _ Empty = Empty
+dropJ n jl@(Append m l1 l2)
+  | n <= 0                    = jl
+  | n >= (getSize . size $ m) = Empty
+  | n >= jlSize l1            = dropJ (n - jlSize l1) l2
+  |otherwise                  = (dropJ n l1) +++ l2
+dropJ _ (Single _ _) = Empty
