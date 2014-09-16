@@ -34,6 +34,8 @@ jlToList (Append _ l1 l2) = jlToList l1 ++ jlToList l2
 jlSize :: (Sized b, Monoid b) => JoinList b a -> Int
 jlSize = getSize . size . tag
 
+-- Exercise 2.1
+
 indexJ :: (Sized b, Monoid b) => Int -> JoinList b a -> Maybe a
 indexJ _ Empty        = Nothing
 indexJ 0 (Single _ a) = Just a
@@ -44,6 +46,8 @@ indexJ n jl@(Append m l1 l2)
   | n < jlSize l1 = indexJ n l1
   | otherwise     = indexJ (n - jlSize l1) l2
 
+-- Exercise 2.2
+
 dropJ :: (Sized b, Monoid b) =>
          Int -> JoinList b a -> JoinList b a
 dropJ _ Empty = Empty
@@ -51,5 +55,17 @@ dropJ n jl@(Append m l1 l2)
   | n <= 0                    = jl
   | n >= (getSize . size $ m) = Empty
   | n >= jlSize l1            = dropJ (n - jlSize l1) l2
-  |otherwise                  = (dropJ n l1) +++ l2
+  | otherwise                 = (dropJ n l1) +++ l2
 dropJ _ (Single _ _) = Empty
+
+-- Exercise 2.3
+
+takeJ :: (Sized b, Monoid b) =>
+         Int -> JoinList b a -> JoinList b a
+takeJ _ Empty = Empty
+takeJ n jl@(Append m l1 l2)
+  | n <= 0                    = Empty
+  | n >= (getSize . size $ m) = jl
+  | n >= jlSize l1            = l1 +++ (takeJ (n - jlSize l1) l2)
+  | otherwise                 = takeJ (jlSize l1) l1
+takeJ _ s@(Single _ _) = s
