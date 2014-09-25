@@ -1,8 +1,11 @@
+{-# LANGUAGE FlexibleInstances, TypeSynonymInstances #-}
+
 module JoinList where
 
-import Data.Monoid
 import Sized
+import Buffer
 import Scrabble
+import Data.Monoid
 
 data JoinList m a = Empty
                   | Single m a
@@ -75,3 +78,10 @@ takeJ _ s@(Single _ _) = s
 
 scoreLine :: String -> JoinList Score String
 scoreLine s = Single (scoreString s) s
+
+-- Exercise 4
+
+instance Buffer (JoinList (Score, Size) String) where
+  toString Empty            = ""
+  toString (Single _ a)     = a
+  toString (Append m l1 l2) = toString l1 ++ toString l2
