@@ -82,6 +82,20 @@ scoreLine s = Single (scoreString s) s
 -- Exercise 4
 
 instance Buffer (JoinList (Score, Size) String) where
-  toString Empty            = ""
-  toString (Single _ a)     = a
-  toString (Append m l1 l2) = toString l1 ++ toString l2
+  toString Empty                     = ""
+  toString (Single _ a)              = a
+  toString (Append _ l1 l2)          = toString l1 ++ toString l2
+
+  fromString s                       = Single ((scoreString s), Size 1) s
+
+  line                               = indexJ
+
+  replaceLine n s l                  = takeJ (n - 1) l +++ fromString s +++ dropJ n l
+
+  numLines Empty                     = 0
+  numLines (Single _ _)              = 1
+  numLines (Append (_, s) _ _)       = getSize s
+
+  value Empty                        = 0
+  value (Single (Score n, _) _)      = n
+  value (Append (Score n, _) _ _)    = n
