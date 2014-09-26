@@ -4,6 +4,7 @@ module JoinList where
 
 import Sized
 import Buffer
+import Editor
 import Scrabble
 import Data.Monoid
 
@@ -99,3 +100,11 @@ instance Buffer (JoinList (Score, Size) String) where
   value Empty                        = 0
   value (Single (Score n, _) _)      = n
   value (Append (Score n, _) _ _)    = n
+
+main = runEditor editor jlbuffer
+  where jlbuffer = fromString $ unlines
+                   [ "This buffer is for notes you don't want to save, and for"
+                   , "evaluation of steam valve coefficients."
+                   , "To load a different file, type the character L followed"
+                   , "by the name of the file."
+                   ] :: (JoinList (Score, Size) String)
