@@ -4,6 +4,7 @@ module Party where
 
 import Employee
 import Data.Monoid
+import Data.Tree
 
 -- Exercise 1
 
@@ -16,3 +17,9 @@ instance Monoid GuestList where
 
 moreFun :: GuestList -> GuestList -> GuestList
 moreFun = max
+
+-- Exercise 2
+
+treeFold :: (a -> b -> b) -> b -> Tree a -> b
+treeFold f i Node { rootLabel = r, subForest = [] } = f r i
+treeFold f i Node { rootLabel = r, subForest = s  } = f r (foldl (treeFold f) i s)
